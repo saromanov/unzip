@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// Unzip provides unzipping of the file
 func Unzip(src string, dest string, callback func(string) bool) ([]string, error) {
 
 	var filenames []string
@@ -44,15 +45,15 @@ func Unzip(src string, dest string, callback func(string) bool) ([]string, error
 			return filenames, err
 		}
 
-		rc, err := f.Open()
+		target, err := f.Open()
 		if err != nil {
 			return filenames, err
 		}
 
-		_, err = io.Copy(outFile, rc)
+		_, err = io.Copy(outFile, target)
 
 		outFile.Close()
-		rc.Close()
+		target.Close()
 
 		if err != nil {
 			return filenames, err
